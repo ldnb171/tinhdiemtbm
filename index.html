@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tính điểm trung bình môn năm học</title>
+
+  <style>
+
+    *{
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body{
+      margin:0;
+      padding:20px;
+      background:#f3f4f6;
+    }
+
+    .container{
+      max-width:900px;
+      margin:auto;
+      background:white;
+      padding:35px;
+      border-radius:20px;
+      box-shadow:0 0 18px rgba(0,0,0,0.08);
+    }
+
+    h1{
+      text-align:center;
+      margin-bottom:35px;
+      font-size:48px;
+      color:#111827;
+    }
+
+    .section{
+      margin-bottom:25px;
+    }
+
+    label{
+      display:block;
+      margin-bottom:10px;
+      font-weight:bold;
+      font-size:18px;
+    }
+
+    .radio-group{
+      display:flex;
+      align-items:center;
+      gap:40px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+
+    .radio-item{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:18px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .radio-item input{
+      width:22px;
+      height:22px;
+      cursor:pointer;
+    }
+
+    .inputs{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(120px,1fr));
+      gap:14px;
+    }
+
+    input[type="text"]{
+      width:100%;
+      padding:14px;
+      border:2px solid #d1d5db;
+      border-radius:14px;
+      font-size:18px;
+      outline:none;
+      transition:0.2s;
+    }
+
+    input[type="text"]:focus{
+      border-color:#2563eb;
+    }
+
+    button{
+      width:100%;
+      padding:18px;
+      border:none;
+      border-radius:16px;
+      background:#2563eb;
+      color:white;
+      font-size:24px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.2s;
+    }
+
+    button:hover{
+      background:#1d4ed8;
+    }
+
+    .result{
+      margin-top:30px;
+      background:#eef4ff;
+      border-radius:18px;
+      padding:25px;
+      line-height:2;
+      font-size:20px;
+    }
+
+    .hidden{
+      display:none;
+    }
+
+    .error{
+      color:red;
+      font-size:18px;
+      font-weight:bold;
+      margin-top:15px;
+    }
+
+    .note{
+      margin-top:8px;
+      color:#666;
+      font-size:15px;
+    }
+
+    hr{
+      margin:35px 0;
+      border:none;
+      border-top:2px solid #d1d5db;
+    }
+
+    .sub-title{
+      font-size:24px;
+      font-weight:bold;
+      margin-bottom:20px;
+      color:#111827;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>Tính điểm trung bình môn năm học</h1>
+
+    <!-- CHỌN CHẾ ĐỘ -->
+    <div class="section">
+
+      <label>Chọn chế độ tính:</label>
+
+      <div class="radio-group">
+
+        <label class="radio-item">
+          <input type="radio" name="mode" value="1hk" checked>
+          Tính điểm 1 học kỳ
+        </label>
+
+        <label class="radio-item">
+          <input type="radio" name="mode" value="year">
+          Tính điểm cả năm
+        </label>
+
+      </div>
+
+    </div>
+
+    <!-- PHẦN HKI -->
+    <div id="yearSection" class="hidden">
+
+      <div class="section">
+
+        <label>Điểm TBM HKI:</label>
+
+        <input type="text" id="hki" placeholder="Nhập điểm TBM HKI">
+
+      </div>
+
+      <hr>
+
+      <div class="sub-title">
+        Nhập điểm HKII
+      </div>
+
+    </div>
+
+    <!-- PHẦN NHẬP ĐIỂM -->
+    <div id="semesterInputs">
+
+      <div class="section">
+
+        <label>Điểm KTTX (tối đa 5 cột):</label>
+
+        <div class="inputs">
+
+          <input type="text" class="kttx" placeholder="KTTX 1">
+          <input type="text" class="kttx" placeholder="KTTX 2">
+          <input type="text" class="kttx" placeholder="KTTX 3">
+          <input type="text" class="kttx" placeholder="KTTX 4">
+          <input type="text" class="kttx" placeholder="KTTX 5">
+
+        </div>
+
+        <div class="note">
+          Có thể nhập ít hơn 5 cột.
+        </div>
+
+      </div>
+
+      <div class="section">
+
+        <label>Điểm giữa kỳ (KTGK):</label>
+
+        <input type="text" id="gk" placeholder="Nhập điểm giữa kỳ">
+
+      </div>
+
+      <div class="section">
+
+        <label>Điểm cuối kỳ (KTCK):</label>
+
+        <input type="text" id="ck" placeholder="Nhập điểm cuối kỳ">
+
+      </div>
+
+    </div>
+
+    <button onclick="calculate()">
+      Tính điểm
+    </button>
+
+    <div class="error" id="error"></div>
+
+    <!-- KẾT QUẢ -->
+    <div class="result hidden" id="result">
+
+      <div>
+        <b>Điểm TBM:</b>
+        <span id="full"></span>
+      </div>
+
+      <div>
+        <b>Điểm TBM (làm tròn 2 chữ số thập phân):</b>
+        <span id="round2"></span>
+      </div>
+
+      <div>
+        <b>Điểm TBM (làm tròn 1 chữ số thập phân):</b>
+        <span id="round1"></span>
+      </div>
+
+    </div>
+
+  </div>
+
+<script>
+
+  const modeRadios = document.querySelectorAll('input[name="mode"]');
+
+  const yearSection = document.getElementById("yearSection");
+
+  // HIỆN / ẨN PHẦN HKI
+  modeRadios.forEach(radio => {
+
+    radio.addEventListener("change", () => {
+
+      const mode =
+      document.querySelector('input[name="mode"]:checked').value;
+
+      if(mode === "year"){
+
+        yearSection.classList.remove("hidden");
+
+      }else{
+
+        yearSection.classList.add("hidden");
+
+      }
+
+    });
+
+  });
+
+  // CHUYỂN INPUT THÀNH SỐ
+  function normalizeScore(value){
+
+    value = value.trim();
+
+    if(value === ""){
+      return null;
+    }
+
+    // Đổi dấu phẩy thành dấu chấm
+    value = value.replace(",", ".");
+
+    let num = parseFloat(value);
+
+    if(isNaN(num)){
+      return "invalid";
+    }
+
+    return num;
+
+  }
+
+  // KIỂM TRA ĐIỂM
+  function checkScore(score){
+
+    return score >= 0 && score <= 10;
+
+  }
+
+  // TÍNH ĐIỂM
+  function calculate(){
+
+    const mode =
+    document.querySelector('input[name="mode"]:checked').value;
+
+    const errorDiv = document.getElementById("error");
+
+    const resultDiv = document.getElementById("result");
+
+    errorDiv.innerText = "";
+
+    resultDiv.classList.add("hidden");
+
+    let tbm = 0;
+
+    // LẤY KTTX
+    const kttxInputs =
+    document.querySelectorAll(".kttx");
+
+    let kttxScores = [];
+
+    for(let input of kttxInputs){
+
+      let score =
+      normalizeScore(input.value);
+
+      if(score === "invalid"){
+
+        errorDiv.innerText =
+        "Có ô điểm KTTX không hợp lệ.";
+
+        return;
+
+      }
+
+      if(score !== null){
+
+        if(!checkScore(score)){
+
+          errorDiv.innerText =
+          "Điểm không được nhỏ hơn 0 hoặc lớn hơn 10.";
+
+          return;
+
+        }
+
+        kttxScores.push(score);
+
+      }
+
+    }
+
+    // ĐIỂM GK
+    const gk =
+    normalizeScore(
+      document.getElementById("gk").value
+    );
+
+    // ĐIỂM CK
+    const ck =
+    normalizeScore(
+      document.getElementById("ck").value
+    );
+
+    if(gk === null || ck === null){
+
+      errorDiv.innerText =
+      "Vui lòng nhập điểm giữa kỳ và cuối kỳ.";
+
+      return;
+
+    }
+
+    if(gk === "invalid" || ck === "invalid"){
+
+      errorDiv.innerText =
+      "Điểm giữa kỳ hoặc cuối kỳ không hợp lệ.";
+
+      return;
+
+    }
+
+    if(!checkScore(gk) || !checkScore(ck)){
+
+      errorDiv.innerText =
+      "Điểm không được nhỏ hơn 0 hoặc lớn hơn 10.";
+
+      return;
+
+    }
+
+    // TÍNH TBM HK
+    let total = 0;
+
+    kttxScores.forEach(score => {
+
+      total += score;
+
+    });
+
+    total += gk * 2;
+
+    total += ck * 3;
+
+    let n =
+    kttxScores.length + 2 + 3;
+
+    let semesterAverage =
+    total / n;
+
+    // TÍNH 1 HK
+    if(mode === "1hk"){
+
+      tbm = semesterAverage;
+
+    }
+
+    // TÍNH CẢ NĂM
+    else{
+
+      const hki =
+      normalizeScore(
+        document.getElementById("hki").value
+      );
+
+      if(hki === null){
+
+        errorDiv.innerText =
+        "Vui lòng nhập điểm TBM HKI.";
+
+        return;
+
+      }
+
+      if(hki === "invalid"){
+
+        errorDiv.innerText =
+        "Điểm TBM HKI không hợp lệ.";
+
+        return;
+
+      }
+
+      if(!checkScore(hki)){
+
+        errorDiv.innerText =
+        "Điểm TBM HKI phải từ 0 đến 10.";
+
+        return;
+
+      }
+
+      // CÔNG THỨC CẢ NĂM
+      tbm =
+      (hki + (semesterAverage * 2)) / 3;
+
+    }
+
+    // HIỂN THỊ KẾT QUẢ
+    document.getElementById("full").innerText =
+    Number(tbm.toFixed(5));
+
+    document.getElementById("round2").innerText =
+    tbm.toFixed(2);
+
+    document.getElementById("round1").innerText =
+    tbm.toFixed(1);
+
+    resultDiv.classList.remove("hidden");
+
+  }
+
+</script>
+
+</body>
+</html>
