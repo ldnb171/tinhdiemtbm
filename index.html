@@ -174,14 +174,18 @@
 
   </div>
 
-  <!-- PHẦN HKI -->
+  <!-- PHẦN CẢ NĂM -->
   <div id="yearSection" class="hidden">
 
     <div class="section">
 
       <label>Điểm TBM HKI:</label>
 
-      <input type="text" id="hki" placeholder="Nhập điểm TBM HKI">
+      <input
+        type="text"
+        id="hki"
+        placeholder="Nhập điểm TBM HKI"
+      >
 
     </div>
 
@@ -197,12 +201,21 @@
       <div class="radio-group">
 
         <label class="radio-item">
-          <input type="radio" name="hkiiMode" value="detail" checked>
+          <input
+            type="radio"
+            name="hkiiMode"
+            value="detail"
+            checked
+          >
           Nhập điểm HKII
         </label>
 
         <label class="radio-item">
-          <input type="radio" name="hkiiMode" value="tbm">
+          <input
+            type="radio"
+            name="hkiiMode"
+            value="tbm"
+          >
           Nhập điểm TBM HKII
         </label>
 
@@ -217,7 +230,11 @@
 
         <label>Điểm TBM HKII:</label>
 
-        <input type="text" id="hkii">
+        <input
+          type="text"
+          id="hkii"
+          placeholder="Nhập điểm TBM HKII"
+        >
 
       </div>
 
@@ -225,7 +242,7 @@
 
   </div>
 
-  <!-- NHẬP CHI TIẾT HK -->
+  <!-- NHẬP CHI TIẾT -->
   <div id="detailInputs">
 
     <div class="section">
@@ -252,7 +269,11 @@
 
       <label>Điểm giữa kỳ (KTGK):</label>
 
-      <input type="text" id="gk" placeholder="Nhập điểm giữa kỳ">
+      <input
+        type="text"
+        id="gk"
+        placeholder="Nhập điểm giữa kỳ"
+      >
 
     </div>
 
@@ -260,7 +281,11 @@
 
       <label>Điểm cuối kỳ (KTCK):</label>
 
-      <input type="text" id="ck" placeholder="Nhập điểm cuối kỳ">
+      <input
+        type="text"
+        id="ck"
+        placeholder="Nhập điểm cuối kỳ"
+      >
 
     </div>
 
@@ -311,14 +336,13 @@
   const tbmHKIISection =
   document.getElementById("tbmHKIISection");
 
-  // CHUYỂN 1HK / CẢ NĂM
+  // CẬP NHẬT GIAO DIỆN
   mainModes.forEach(radio => {
 
     radio.addEventListener("change", updateUI);
 
   });
 
-  // CHUYỂN NHẬP HKII
   hkiiModes.forEach(radio => {
 
     radio.addEventListener("change", updateUI);
@@ -451,6 +475,7 @@
     });
 
     total += gk * 2;
+
     total += ck * 3;
 
     let n =
@@ -478,7 +503,7 @@
 
     let tbm = 0;
 
-    // 1 HỌC KỲ
+    // TÍNH 1 HK
     if(mainMode === "1hk"){
 
       let semesterAverage =
@@ -515,7 +540,7 @@
 
     }
 
-    // CẢ NĂM
+    // TÍNH CẢ NĂM
     else{
 
       const hki =
@@ -627,13 +652,12 @@
 
       }
 
-      // TÍNH TBM CẢ NĂM
       tbm =
       (hki + (hkii * 2)) / 3;
 
     }
 
-    // HIỂN THỊ
+    // HIỂN THỊ KẾT QUẢ
     document.getElementById("full").innerText =
     Number(tbm.toFixed(5));
 
