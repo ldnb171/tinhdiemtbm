@@ -8,8 +8,8 @@
   <style>
 
     *{
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
+      box-sizing:border-box;
+      font-family:Arial, sans-serif;
     }
 
     body{
@@ -30,7 +30,7 @@
     h1{
       text-align:center;
       margin-bottom:35px;
-      font-size:48px;
+      font-size:44px;
       color:#111827;
     }
 
@@ -48,7 +48,7 @@
     .radio-group{
       display:flex;
       align-items:center;
-      gap:40px;
+      gap:35px;
       flex-wrap:wrap;
       margin-top:10px;
     }
@@ -63,8 +63,8 @@
     }
 
     .radio-item input{
-      width:22px;
-      height:22px;
+      width:20px;
+      height:20px;
       cursor:pointer;
     }
 
@@ -114,15 +114,15 @@
       font-size:20px;
     }
 
-    .hidden{
-      display:none;
-    }
-
     .error{
+      margin-top:15px;
       color:red;
       font-size:18px;
       font-weight:bold;
-      margin-top:15px;
+    }
+
+    .hidden{
+      display:none;
     }
 
     .note{
@@ -149,146 +149,219 @@
 
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <h1>Tính điểm trung bình môn năm học</h1>
+  <h1>Tính điểm trung bình môn năm học</h1>
 
-    <!-- CHỌN CHẾ ĐỘ -->
+  <!-- CHỌN CHẾ ĐỘ -->
+  <div class="section">
+
+    <label>Chọn chế độ tính:</label>
+
+    <div class="radio-group">
+
+      <label class="radio-item">
+        <input type="radio" name="mainMode" value="1hk" checked>
+        Tính điểm 1 học kỳ
+      </label>
+
+      <label class="radio-item">
+        <input type="radio" name="mainMode" value="year">
+        Tính điểm cả năm
+      </label>
+
+    </div>
+
+  </div>
+
+  <!-- PHẦN HKI -->
+  <div id="yearSection" class="hidden">
+
     <div class="section">
 
-      <label>Chọn chế độ tính:</label>
+      <label>Điểm TBM HKI:</label>
+
+      <input type="text" id="hki" placeholder="Nhập điểm TBM HKI">
+
+    </div>
+
+    <hr>
+
+    <div class="sub-title">
+      Nhập điểm HKII
+    </div>
+
+    <!-- CHỌN CÁCH NHẬP HKII -->
+    <div class="section">
 
       <div class="radio-group">
 
         <label class="radio-item">
-          <input type="radio" name="mode" value="1hk" checked>
-          Tính điểm 1 học kỳ
+          <input type="radio" name="hkiiMode" value="detail" checked>
+          Nhập điểm HKII
         </label>
 
         <label class="radio-item">
-          <input type="radio" name="mode" value="year">
-          Tính điểm cả năm
+          <input type="radio" name="hkiiMode" value="tbm">
+          Nhập điểm TBM HKII
         </label>
 
       </div>
 
     </div>
 
-    <!-- PHẦN HKI -->
-    <div id="yearSection" class="hidden">
+    <!-- NHẬP TBM HKII -->
+    <div id="tbmHKIISection" class="hidden">
 
       <div class="section">
 
-        <label>Điểm TBM HKI:</label>
+        <label>Điểm TBM HKII:</label>
 
-        <input type="text" id="hki" placeholder="Nhập điểm TBM HKI">
+        <input type="text" id="hkii">
 
-      </div>
-
-      <hr>
-
-      <div class="sub-title">
-        Nhập điểm HKII
-      </div>
-
-    </div>
-
-    <!-- PHẦN NHẬP ĐIỂM -->
-    <div id="semesterInputs">
-
-      <div class="section">
-
-        <label>Điểm KTTX (tối đa 5 cột):</label>
-
-        <div class="inputs">
-
-          <input type="text" class="kttx" placeholder="KTTX 1">
-          <input type="text" class="kttx" placeholder="KTTX 2">
-          <input type="text" class="kttx" placeholder="KTTX 3">
-          <input type="text" class="kttx" placeholder="KTTX 4">
-          <input type="text" class="kttx" placeholder="KTTX 5">
-
-        </div>
-
-        <div class="note">
-          Có thể nhập ít hơn 5 cột.
-        </div>
-
-      </div>
-
-      <div class="section">
-
-        <label>Điểm giữa kỳ (KTGK):</label>
-
-        <input type="text" id="gk" placeholder="Nhập điểm giữa kỳ">
-
-      </div>
-
-      <div class="section">
-
-        <label>Điểm cuối kỳ (KTCK):</label>
-
-        <input type="text" id="ck" placeholder="Nhập điểm cuối kỳ">
-
-      </div>
-
-    </div>
-
-    <button onclick="calculate()">
-      Tính điểm
-    </button>
-
-    <div class="error" id="error"></div>
-
-    <!-- KẾT QUẢ -->
-    <div class="result hidden" id="result">
-
-      <div>
-        <b>Điểm TBM:</b>
-        <span id="full"></span>
-      </div>
-
-      <div>
-        <b>Điểm TBM (làm tròn 2 chữ số thập phân):</b>
-        <span id="round2"></span>
-      </div>
-
-      <div>
-        <b>Điểm TBM (làm tròn 1 chữ số thập phân):</b>
-        <span id="round1"></span>
       </div>
 
     </div>
 
   </div>
 
+  <!-- NHẬP CHI TIẾT HK -->
+  <div id="detailInputs">
+
+    <div class="section">
+
+      <label>Điểm KTTX (tối đa 5 cột):</label>
+
+      <div class="inputs">
+
+        <input type="text" class="kttx" placeholder="KTTX 1">
+        <input type="text" class="kttx" placeholder="KTTX 2">
+        <input type="text" class="kttx" placeholder="KTTX 3">
+        <input type="text" class="kttx" placeholder="KTTX 4">
+        <input type="text" class="kttx" placeholder="KTTX 5">
+
+      </div>
+
+      <div class="note">
+        Có thể nhập ít hơn 5 cột.
+      </div>
+
+    </div>
+
+    <div class="section">
+
+      <label>Điểm giữa kỳ (KTGK):</label>
+
+      <input type="text" id="gk" placeholder="Nhập điểm giữa kỳ">
+
+    </div>
+
+    <div class="section">
+
+      <label>Điểm cuối kỳ (KTCK):</label>
+
+      <input type="text" id="ck" placeholder="Nhập điểm cuối kỳ">
+
+    </div>
+
+  </div>
+
+  <button onclick="calculate()">
+    Tính điểm
+  </button>
+
+  <div class="error" id="error"></div>
+
+  <!-- KẾT QUẢ -->
+  <div class="result hidden" id="result">
+
+    <div>
+      <b>Điểm TBM:</b>
+      <span id="full"></span>
+    </div>
+
+    <div>
+      <b>Điểm TBM (làm tròn 2 chữ số thập phân):</b>
+      <span id="round2"></span>
+    </div>
+
+    <div>
+      <b>Điểm TBM (làm tròn 1 chữ số thập phân):</b>
+      <span id="round1"></span>
+    </div>
+
+  </div>
+
+</div>
+
 <script>
 
-  const modeRadios = document.querySelectorAll('input[name="mode"]');
+  const mainModes =
+  document.querySelectorAll('input[name="mainMode"]');
 
-  const yearSection = document.getElementById("yearSection");
+  const hkiiModes =
+  document.querySelectorAll('input[name="hkiiMode"]');
 
-  // HIỆN / ẨN PHẦN HKI
-  modeRadios.forEach(radio => {
+  const yearSection =
+  document.getElementById("yearSection");
 
-    radio.addEventListener("change", () => {
+  const detailInputs =
+  document.getElementById("detailInputs");
 
-      const mode =
-      document.querySelector('input[name="mode"]:checked').value;
+  const tbmHKIISection =
+  document.getElementById("tbmHKIISection");
 
-      if(mode === "year"){
+  // CHUYỂN 1HK / CẢ NĂM
+  mainModes.forEach(radio => {
 
-        yearSection.classList.remove("hidden");
+    radio.addEventListener("change", updateUI);
+
+  });
+
+  // CHUYỂN NHẬP HKII
+  hkiiModes.forEach(radio => {
+
+    radio.addEventListener("change", updateUI);
+
+  });
+
+  function updateUI(){
+
+    const mainMode =
+    document.querySelector('input[name="mainMode"]:checked').value;
+
+    if(mainMode === "year"){
+
+      yearSection.classList.remove("hidden");
+
+      const hkiiMode =
+      document.querySelector('input[name="hkiiMode"]:checked').value;
+
+      if(hkiiMode === "tbm"){
+
+        tbmHKIISection.classList.remove("hidden");
+
+        detailInputs.classList.add("hidden");
 
       }else{
 
-        yearSection.classList.add("hidden");
+        tbmHKIISection.classList.add("hidden");
+
+        detailInputs.classList.remove("hidden");
 
       }
 
-    });
+    }else{
 
-  });
+      yearSection.classList.add("hidden");
+
+      tbmHKIISection.classList.add("hidden");
+
+      detailInputs.classList.remove("hidden");
+
+    }
+
+  }
 
   // CHUYỂN INPUT THÀNH SỐ
   function normalizeScore(value){
@@ -299,7 +372,6 @@
       return null;
     }
 
-    // Đổi dấu phẩy thành dấu chấm
     value = value.replace(",", ".");
 
     let num = parseFloat(value);
@@ -319,27 +391,13 @@
 
   }
 
-  // TÍNH ĐIỂM
-  function calculate(){
+  // TÍNH TBM HK
+  function calculateSemesterAverage(){
 
-    const mode =
-    document.querySelector('input[name="mode"]:checked').value;
-
-    const errorDiv = document.getElementById("error");
-
-    const resultDiv = document.getElementById("result");
-
-    errorDiv.innerText = "";
-
-    resultDiv.classList.add("hidden");
-
-    let tbm = 0;
-
-    // LẤY KTTX
     const kttxInputs =
     document.querySelectorAll(".kttx");
 
-    let kttxScores = [];
+    let scores = [];
 
     for(let input of kttxInputs){
 
@@ -347,97 +405,117 @@
       normalizeScore(input.value);
 
       if(score === "invalid"){
-
-        errorDiv.innerText =
-        "Có ô điểm KTTX không hợp lệ.";
-
-        return;
-
+        return "invalid";
       }
 
       if(score !== null){
 
         if(!checkScore(score)){
-
-          errorDiv.innerText =
-          "Điểm không được nhỏ hơn 0 hoặc lớn hơn 10.";
-
-          return;
-
+          return "range";
         }
 
-        kttxScores.push(score);
+        scores.push(score);
 
       }
 
     }
 
-    // ĐIỂM GK
     const gk =
     normalizeScore(
       document.getElementById("gk").value
     );
 
-    // ĐIỂM CK
     const ck =
     normalizeScore(
       document.getElementById("ck").value
     );
 
     if(gk === null || ck === null){
-
-      errorDiv.innerText =
-      "Vui lòng nhập điểm giữa kỳ và cuối kỳ.";
-
-      return;
-
+      return "missing";
     }
 
     if(gk === "invalid" || ck === "invalid"){
-
-      errorDiv.innerText =
-      "Điểm giữa kỳ hoặc cuối kỳ không hợp lệ.";
-
-      return;
-
+      return "invalid";
     }
 
     if(!checkScore(gk) || !checkScore(ck)){
-
-      errorDiv.innerText =
-      "Điểm không được nhỏ hơn 0 hoặc lớn hơn 10.";
-
-      return;
-
+      return "range";
     }
 
-    // TÍNH TBM HK
     let total = 0;
 
-    kttxScores.forEach(score => {
+    scores.forEach(score => {
 
       total += score;
 
     });
 
     total += gk * 2;
-
     total += ck * 3;
 
     let n =
-    kttxScores.length + 2 + 3;
+    scores.length + 2 + 3;
 
-    let semesterAverage =
-    total / n;
+    return total / n;
 
-    // TÍNH 1 HK
-    if(mode === "1hk"){
+  }
+
+  // TÍNH ĐIỂM
+  function calculate(){
+
+    const errorDiv =
+    document.getElementById("error");
+
+    const resultDiv =
+    document.getElementById("result");
+
+    errorDiv.innerText = "";
+
+    resultDiv.classList.add("hidden");
+
+    const mainMode =
+    document.querySelector('input[name="mainMode"]:checked').value;
+
+    let tbm = 0;
+
+    // 1 HỌC KỲ
+    if(mainMode === "1hk"){
+
+      let semesterAverage =
+      calculateSemesterAverage();
+
+      if(semesterAverage === "missing"){
+
+        errorDiv.innerText =
+        "Vui lòng nhập đầy đủ điểm giữa kỳ và cuối kỳ.";
+
+        return;
+
+      }
+
+      if(semesterAverage === "invalid"){
+
+        errorDiv.innerText =
+        "Có điểm không hợp lệ.";
+
+        return;
+
+      }
+
+      if(semesterAverage === "range"){
+
+        errorDiv.innerText =
+        "Điểm không được nhỏ hơn 0 hoặc lớn hơn 10.";
+
+        return;
+
+      }
 
       tbm = semesterAverage;
 
     }
 
-    // TÍNH CẢ NĂM
+    // CẢ NĂM
     else{
 
       const hki =
@@ -472,13 +550,90 @@
 
       }
 
-      // CÔNG THỨC CẢ NĂM
+      const hkiiMode =
+      document.querySelector('input[name="hkiiMode"]:checked').value;
+
+      let hkii = 0;
+
+      // NHẬP TBM HKII
+      if(hkiiMode === "tbm"){
+
+        hkii =
+        normalizeScore(
+          document.getElementById("hkii").value
+        );
+
+        if(hkii === null){
+
+          errorDiv.innerText =
+          "Vui lòng nhập điểm TBM HKII.";
+
+          return;
+
+        }
+
+        if(hkii === "invalid"){
+
+          errorDiv.innerText =
+          "Điểm TBM HKII không hợp lệ.";
+
+          return;
+
+        }
+
+        if(!checkScore(hkii)){
+
+          errorDiv.innerText =
+          "Điểm TBM HKII phải từ 0 đến 10.";
+
+          return;
+
+        }
+
+      }
+
+      // NHẬP CHI TIẾT HKII
+      else{
+
+        hkii =
+        calculateSemesterAverage();
+
+        if(hkii === "missing"){
+
+          errorDiv.innerText =
+          "Vui lòng nhập đầy đủ điểm HKII.";
+
+          return;
+
+        }
+
+        if(hkii === "invalid"){
+
+          errorDiv.innerText =
+          "Có điểm HKII không hợp lệ.";
+
+          return;
+
+        }
+
+        if(hkii === "range"){
+
+          errorDiv.innerText =
+          "Điểm không được nhỏ hơn 0 hoặc lớn hơn 10.";
+
+          return;
+
+        }
+
+      }
+
+      // TÍNH TBM CẢ NĂM
       tbm =
-      (hki + (semesterAverage * 2)) / 3;
+      (hki + (hkii * 2)) / 3;
 
     }
 
-    // HIỂN THỊ KẾT QUẢ
+    // HIỂN THỊ
     document.getElementById("full").innerText =
     Number(tbm.toFixed(5));
 
